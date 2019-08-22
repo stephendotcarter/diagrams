@@ -893,20 +893,18 @@
                 [1,["iaas-vcenter","iaas-datastore"]],
                 [1,["nsx","nsx-t0","nsx-physical","nsx-t0-to-physical"]],
                 
-                // releases
-                [1,["release-pks"]],
-                [1,["release-kubo"]],
-                [1,["release-nsx"]],
-                [1,["release-etc"]],
-
-                // bosh
+                
+                // opsman
+                [1,["vm-opsman-name","vm-opsman"]],
+                [1,["vm-opsman-tempest","vm-opsman-uaa"]],
                 [1,["cli-bosh"]],
+                [1,["cli-vsphere-cpi"]],
+                [1,["vm-opsman-installation"]],
 
                 // bosh create env
                 [1,["cmd-bosh-create-env"]],
-                [1,["stemcell"]],
-                [1,["cli-vsphere-cpi"]],
-                [1,["arrow-stemcell-to-bosh-cli"]],
+                
+                // [1,["arrow-stemcell-to-bosh-cli"]],
                 [1,["arrow-bosh-cli-to-vsphere-cpi"]],
                 [1,["arrow-vsphere-cpi-to-vcenter"]],
                 [1,["arrow-vcenter-to-datastore"]],
@@ -921,25 +919,47 @@
                 [1,["vm-bosh-uaa"]],
                 [1,["vm-bosh-director"]],
                 [1,["vm-bosh-vsphere-cpi"]],
-                [-1,["arrow-stemcell-to-bosh-cli","arrow-bosh-cli-to-vsphere-cpi","arrow-vsphere-cpi-to-vcenter","arrow-vcenter-to-datastore","arrow-stemcell-to-bosh","cli-vsphere-cpi"]],
+                [-1,["arrow-bosh-cli-to-vsphere-cpi","arrow-vsphere-cpi-to-vcenter","arrow-vcenter-to-datastore","arrow-stemcell-to-bosh","cli-vsphere-cpi"]],
+
+
+                // tile
+                [1,["tile-pks-name","tile-pks"]],
+                [1,["release-pks"]],
+                [1,["release-kubo"]],
+                [1,["release-nsx"]],
+                [1,["release-etc"]],
+                [1,["tile-pks-metadata"]],
+
+                // stemcell
+                [1,["stemcell"]],
+
+                // upload both
+                [1,["arrow-tile-to-tempest","arrow-stemcell-to-tempest"]],
+                [-1,["arrow-tile-to-tempest","arrow-stemcell-to-tempest"]],
+                
+                // configure
+                [1,["arrow-tempest-to-installation"]],
+                [-1,["arrow-tempest-to-installation"]],
+                
+                // opsman apply changes
+
+                // bosh upload stemcell
+                [1,["cmd-bosh-upload-stemcell"]],
+                [1,["arrow-tempest-to-bosh-cli"]],
+                [1,["arrow-bosh-cli-to-director"]],
+                [1,["arrow-director-to-stemcell"]],
+                [-1,["arrow-bosh-cli-to-director","arrow-director-to-stemcell","arrow-tempest-to-bosh-cli"]],
 
                 // bosh upload release
                 [1,["cmd-bosh-upload-release"]],
-                [1,["arrow-release-to-bosh-cli"]],
+                [1,["arrow-tempest-to-bosh-cli"]],
                 [1,["arrow-bosh-cli-to-director"]],
                 [1,["arrow-director-release"]],
                 [1,["vm-bosh-blobstore-release"]],
-                [-1,["arrow-release-to-bosh-cli", "arrow-bosh-cli-to-director","arrow-director-release"]],
-                
-                // bosh upload stemcell
-                [1,["cmd-bosh-upload-stemcell"]],
-                [1,["arrow-stemcell-to-bosh-cli"]],
-                [1,["arrow-bosh-cli-to-director"]],
-                [1,["arrow-director-to-stemcell"]],
-                [-1,["arrow-stemcell-to-bosh-cli", "arrow-bosh-cli-to-director","arrow-director-to-stemcell"]],
-                
+                [-1,["arrow-bosh-cli-to-director","arrow-director-release","arrow-tempest-to-bosh-cli"]],
+
                 // bosh deploy pks
-                [1,["vm-opsman-manifest"]],
+                [1,["arrow-tempest-to-manifest","vm-opsman-manifest"]],
                 [1,["cmd-bosh-deploy"]],
                 [1,["arrow-manifest-to-bosh-cli"]],
                 [1,["arrow-bosh-cli-to-director"]],
@@ -971,7 +991,7 @@
                 [1,["vm-pks-pks-broker"]],
                 [1,["vm-pks-uaa"]],
                 [1,["vm-pks-nsx-proxy"]],
-                [-1,["arrow-director-to-nats","arrow-director-to-stemcell","arrow-stemcell-to-pks","arrow-pks-to-nats","arrow-pks-to-blobstore","arrow-manifest-to-bosh-cli","arrow-bosh-cli-to-director"]],
+                [-1,["arrow-tempest-to-manifest","arrow-director-to-nats","arrow-director-to-stemcell","arrow-stemcell-to-pks","arrow-pks-to-nats","arrow-pks-to-blobstore","arrow-manifest-to-bosh-cli","arrow-bosh-cli-to-director"]],
                 
                 // pks cli
                 [1,["cli-pks"]],
@@ -1041,15 +1061,15 @@
                 [1,["arrow-nsx-to-t1-namespace","nsx-t0-to-t1-namespace","nsx-t1-namespace"]],
                 [-1,["arrow-kubectl-to-kube-apiserver","arrow-kube-apiserver-to-ncp","arrow-ncp-to-nsx","arrow-nsx-to-t1-namespace"]],
 
-                // run pod    
+                // run pod
                 [1,["cmd-kubectl-run-mypod"]],
                 [1,["arrow-kubectl-to-kube-apiserver"]],
                 [1,["arrow-kubelet-to-kube-apiserver"]],
                 [1,["arrow-kubelet-to-docker"]],
                 [1,["arrow-harbor-image-to-docker"]],
                 [1,["arrow-docker-to-mypod","vm-k8s-worker-mypod"]],
-                [1,["arrow-kube-apiserver-to-ncp"]],
-                [1,["arrow-ncp-to-nsx"]],
+                // [1,["arrow-kube-apiserver-to-ncp"]],
+                // [1,["arrow-ncp-to-nsx"]],
                 [1,["arrow-nsx-cni-to-kube-apiserver"]],
                 [1,["arrow-nsx-cni-to-ovs"]],
                 [1,["arrow-ovs-to-ls-namespace"]],
@@ -1057,19 +1077,9 @@
                 [1,["nsx-t1-namespace-ls-net-2","nsx-t1-namespace-ls-net-3","nsx-t1-namespace-ls-net-1"]],
                 [-1,["arrow-kubectl-to-kube-apiserver","arrow-kubelet-to-kube-apiserver","arrow-kubelet-to-docker","arrow-harbor-image-to-docker","arrow-docker-to-mypod","arrow-nsx-cni-to-kube-apiserver","arrow-nsx-cni-to-ovs","arrow-ovs-to-ls-namespace","arrow-kube-apiserver-to-ncp","arrow-ncp-to-nsx"]],
 
-                // tile
-                [1,["tile-pks-metadata"]],
-                [1,["tile-pks-name","tile-pks"]],
-                
-                // opsman
-                [1,["vm-opsman-name","vm-opsman"]],
-                [1,["vm-opsman-tempest","vm-opsman-uaa"]],
-                [1,["vm-opsman-installation"]],
-                [1,["arrow-tile-to-tempest","arrow-stemcell-to-tempest"]],
-                [1,["arrow-tempest-to-installation"]],
-                [1,["arrow-tempest-to-manifest"]],
-                [1,["arrow-tempest-to-bosh-cli"]],
-                [1,["arrow-bosh-cli-to-director","cli-vsphere-cpi","arrow-bosh-cli-to-vsphere-cpi","arrow-vsphere-cpi-to-vcenter"]],
+                // without opsman
+                [-1,["tile-pks-metadata","tile-pks-name","tile-pks"]],
+                [-1,["vm-opsman-name","vm-opsman","vm-opsman-tempest","vm-opsman-uaa", "vm-opsman-installation"]],
             ]
 
             function setProgress() {
